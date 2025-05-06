@@ -69,13 +69,16 @@ class BpbGenerateController extends Controller
 
         // Generate QR Code dari bpb_no
         $qrCode = QrCode::size(100)->generate($bpb_database);
-        // dd($qrCode);
-        // Kirim data dan QR ke view
+        $totalPages = ceil($data->count() / 10);
+        // dd($totalPages);
         $pdf = Pdf::loadView('bpb-outgoing.generate_bpb_pdf', [
-            // 'totalKanban' => $totalKanban,
+            'chunks' => $data->chunk(10), // 10 data per halaman
             'data' => $data,
-            'qrcode' => $qrCode
-        ])->setPaper('a4', 'potrait');
+            'qrcode' => $qrCode,
+            'totalPages' => $totalPages
+        ]);
+
+        // ->setPaper('a4', 'potrait');
         // dd($pdf);
         // ->setPaper([0, 0, 595.28, 935.43], 'landscape'); // ukuran F5 dalam poin
 
