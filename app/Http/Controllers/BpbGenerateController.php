@@ -67,25 +67,6 @@ class BpbGenerateController extends Controller
             ->groupBy('ekanban_no', 'bpb_no', 'part_name', 'po_no')
             ->get();
 
-        // dd($data);
-
-        // // 2. Group by ekanban_no
-        // $data = Ekanban_outgoing_tbl::select(
-        //     'ekanban_no',
-        //     DB::raw('MIN(bpb_no) as bpb_no'),
-        //     DB::raw('MIN(part_name) as part_name'),
-        //     DB::raw('MIN(creation_date) as creation_date'),
-        //     DB::raw('MIN(po_no) as po_no'),
-        //     DB::raw('SUM(qty) as total_qty'),
-        //     DB::raw('COUNT(*) as total_rows')
-        // )
-        //     ->where('bpb_no', $bpb_database)
-        //     ->groupBy('ekanban_no')
-        //     ->get();
-
-
-        // dd($totalKanban, $data);
-
         // Generate QR Code dari bpb_no
         $qrCode = QrCode::size(100)->generate($bpb_database);
         // dd($qrCode);
